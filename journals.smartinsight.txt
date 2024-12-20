@@ -101,4 +101,4 @@ if (isSearchEngineBot()) {
         $application->execute();
     }
 }
-google-site-verification: google1fdf11f68ed63fb7.html
+<meta name="google-site-verification" content="OEqchzoH-zRFWl42RfA7yzyMW8IyNPRMX1XElik4K6w" />
