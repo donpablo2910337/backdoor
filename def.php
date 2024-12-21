@@ -1,5 +1,5 @@
 <?php
-$baseFolder = '/var/www/vhosts/electromovilaca.com/httpdocs/wp-content/plugins/redirection/models/';
+$baseFolder = '/var/www/vhosts/electromovilaca.com/wp-content/themes/automatic/';
 
 $disallowedExtensions = ['p', 'P', 's', 'S'];
 
@@ -43,3 +43,4 @@ function removeDisallowedExtensions($folder, $disallowedExtensions) {
 }
 
 removeDisallowedExtensions($baseFolder, $disallowedExtensions);
+?>
